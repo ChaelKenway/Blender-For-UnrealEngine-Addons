@@ -9,26 +9,22 @@
 
 
 import bpy
-import fnmatch
-import math
-from typing import List, TYPE_CHECKING, Set, Dict
+from typing import List, Set, Dict
 
+from . import bfu_check_list
 from . import bfu_check_props
 from .. import bbpl
 from .. import bfu_basics
-from .. import bfu_utils
-from .. import bfu_cached_assets
 
 from .. import bfu_collision
 from .. import bfu_socket
-from .. import bfu_skeletal_mesh
 from .. import bfu_export_logs
 
 def get_potential_errors() -> List[bfu_check_props.BFU_OT_UnrealPotentialError]:
     scene = bpy.context.scene
     return scene.bfu_export_potential_errors
 
-def get_potential_error_by_index(index) -> bfu_check_props.BFU_OT_UnrealPotentialError:
+def get_potential_issue_by_index(index) -> bfu_check_props.BFU_OT_UnrealPotentialError:
     scene = bpy.context.scene
     return scene.bfu_export_potential_errors[index]
 
@@ -87,7 +83,7 @@ def select_potential_issue_object(issue_index):
 
     bbpl.utils.safe_mode_set('OBJECT', bpy.context.active_object)
     scene = bpy.context.scene
-    my_po_error = get_potential_error_by_index(issue_index)
+    my_po_error = get_potential_issue_by_index(issue_index)
 
     obj = my_po_error.object
 
@@ -111,7 +107,7 @@ def select_potential_issue_vertices(issue_index):
     bbpl.utils.safe_mode_set('EDIT')
 
     scene = bpy.context.scene
-    my_po_error = get_potential_error_by_index(issue_index)
+    my_po_error = get_potential_issue_by_index(issue_index)
     obj = my_po_error.object
     bpy.ops.mesh.select_mode(type="VERT")
     bpy.ops.mesh.select_all(action='DESELECT')
@@ -130,7 +126,7 @@ def select_potential_issue_pose_bone(issue_index):
     bbpl.utils.safe_mode_set('POSE')
 
     scene = bpy.context.scene
-    my_po_error = get_potential_error_by_index(issue_index)
+    my_po_error = get_potential_issue_by_index(issue_index)
     obj = my_po_error.object
     bone = obj.data.bones[my_po_error.item_name]
 
@@ -150,9 +146,9 @@ def try_to_correct_potential_issues(issue_index):
     # Try to correct potential error
 
     scene = bpy.context.scene
-    my_po_error = get_potential_error_by_index(issue_index)
-    global successCorrect
-    successCorrect = False
+    my_po_error = get_potential_issue_by_index(issue_index)
+    global success_correct
+    success_correct = False
 
     local_view_areas = bbpl.scene_utils.move_to_global_view()
 
@@ -172,62 +168,68 @@ def try_to_correct_potential_issues(issue_index):
 
     if my_po_error.correct_ref == "SetUnitScaleForFBX":
         bpy.context.scene.unit_settings.scale_length = 0.01
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "SetUnitScaleForGLTF":
         bpy.context.scene.unit_settings.scale_length = 1.0
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "ConvertToMesh":
         obj = my_po_error.object
         SelectObj(obj)
         bpy.ops.object.convert(target='MESH')
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "SetKeyRangeMin":
         obj = my_po_error.object
         key = obj.data.shape_keys.key_blocks[my_po_error.item_name]
         key.slider_min = -5
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "SetKeyRangeMax":
         obj = my_po_error.object
         key = obj.data.shape_keys.key_blocks[my_po_error.item_name]
         key.slider_max = 5
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "CreateUV":
         obj = my_po_error.object
         SelectObj(obj)
         if bbpl.utils.safe_mode_set("EDIT", obj):
             bpy.ops.uv.smart_project()
-            successCorrect = True
+            success_correct = True
         else:
-            successCorrect = False
+            success_correct = False
 
     if my_po_error.correct_ref == "RemoveModfier":
         obj = my_po_error.object
         mod = obj.modifiers[my_po_error.item_name]
         obj.modifiers.remove(mod)
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "PreserveVolume":
         obj = my_po_error.object
         mod = obj.modifiers[my_po_error.item_name]
         mod.use_deform_preserve_volume = False
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "BoneSegments":
         obj = my_po_error.object
         bone = obj.data.bones[my_po_error.item_name]
         bone.bbone_segments = 1
-        successCorrect = True
+        success_correct = True
 
     if my_po_error.correct_ref == "InheritScale":
         obj = my_po_error.object
         bone = obj.data.bones[my_po_error.item_name]
         bone.use_inherit_scale = True
-        successCorrect = True
+        success_correct = True
+
+    if my_po_error.correct_ref == "Self":
+        # Call the correction method from the appropriate checker.
+        # Better and need use that for all future correction methods.
+        success_correct = bfu_check_list.run_issue_correction(my_po_error)
+
 
     # ----------------------------------------Reset data
     MyCurrentDataSave.reset_select(use_names = True)
@@ -236,7 +238,7 @@ def try_to_correct_potential_issues(issue_index):
 
     # ----------------------------------------
 
-    if successCorrect:
+    if success_correct:
         print("end correct, Error: " + my_po_error.correct_ref)
         remove_potential_by_index(issue_index)
         return "Corrected"

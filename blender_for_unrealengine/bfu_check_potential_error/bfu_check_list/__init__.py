@@ -98,3 +98,19 @@ def run_all_check()-> Dict[str, str]:
 
     check_info["Total Check(s)"] = str(total) + " For more details, see console log."
     return check_info
+
+def run_issue_correction(my_po_error) -> bool:
+    checker_classes = [
+        cls for cls in all_classes
+        if issubclass(cls, bfu_checker)
+        and cls is not bfu_checker
+        and hasattr(cls, "run_correction")
+    ]
+
+    for my_check_cls in checker_classes:
+        instance = my_check_cls()
+        if hasattr(instance, "run_correction"):
+            result = instance.run_correction(my_po_error)
+            if result:
+                return True
+    return False

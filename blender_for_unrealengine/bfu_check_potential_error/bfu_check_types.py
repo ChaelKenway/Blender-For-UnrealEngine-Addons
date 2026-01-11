@@ -84,6 +84,9 @@ class bfu_checker(ABC):
     def run_asset_check(self, asset: AssetToExport):
         pass
 
+    def run_correction(self, my_po_error: bfu_check_props.BFU_OT_UnrealPotentialError) -> bool:
+        return False
+
 
 # -------------------------------------------------------------------
 #   Register & Unregister
