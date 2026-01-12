@@ -40,7 +40,7 @@ class BFU_PT_Export(bpy.types.Panel):
 
     from bl_operators.presets import AddPresetBase
 
-    class BFU_OT_AddNomenclaturePreset(AddPresetBase, bpy.types.Operator):
+    class BFU_OT_AddNomenclaturePreset(AddPresetBase, bpy.types.Operator):  # type: ignore[override]
         bl_idname = 'object.add_nomenclature_preset'
         bl_label = 'Add or remove a preset for Nomenclature'
         bl_description = 'Add or remove a preset for Nomenclature'
@@ -76,7 +76,7 @@ class BFU_PT_Export(bpy.types.Panel):
         row = layout.row(align=True)
         row.menu('BFU_MT_NomenclaturePresets', text='Export Presets')
         row.operator('object.add_nomenclature_preset', text='', icon='ADD')
-        row.operator('object.add_nomenclature_preset', text='', icon='REMOVE').remove_active = True
+        row.operator('object.add_nomenclature_preset', text='', icon='REMOVE').remove_active = True  # type: ignore
 
         # Export sections
         events.stop_last_and_start_new_event("Draw Export Nomenclature")

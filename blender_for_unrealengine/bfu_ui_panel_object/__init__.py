@@ -91,7 +91,6 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
     bl_region_type = "UI"
     bl_category = "Unreal Engine"
 
-
     class BFU_MT_ObjectGlobalPropertiesPresets(bpy.types.Menu):
         bl_label = 'Global Properties Presets'
         preset_subdir = 'blender-for-unrealengine/global-properties-presets'
@@ -100,7 +99,7 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
 
     from bl_operators.presets import AddPresetBase
 
-    class BFU_OT_AddObjectGlobalPropertiesPreset(AddPresetBase, bpy.types.Operator):
+    class BFU_OT_AddObjectGlobalPropertiesPreset(AddPresetBase, bpy.types.Operator):  # type: ignore[override]
         bl_idname = 'object.add_globalproperties_preset'
         bl_label = 'Add or remove a preset for Global properties'
         bl_description = 'Add or remove a preset for Global properties'
@@ -118,7 +117,6 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
 
         # Directory to store the presets
         preset_subdir = 'blender-for-unrealengine/global-properties-presets'
-
 
     def draw(self, context: bpy.types.Context):
 
@@ -151,13 +149,13 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
         row = layout.row(align=True)
         row.menu('BFU_MT_ObjectGlobalPropertiesPresets', text='Global Properties Presets')
         row.operator('object.add_globalproperties_preset', text='', icon='ADD')
-        row.operator('object.add_globalproperties_preset', text='', icon='REMOVE').remove_active = True
+        row.operator('object.add_globalproperties_preset', text='', icon='REMOVE').remove_active = True  # type: ignore
 
         # Tab Buttons
         events.stop_last_and_start_new_event("Draw Tab Buttons")
         scene = context.scene
         layout.row().prop(scene, "bfu_active_tab", expand=True)
-        if scene.bfu_active_tab == "OBJECT":
+        if scene.bfu_active_tab == "OBJECT":  # type: ignore
             layout.row().prop(scene, "bfu_active_object_tab", expand=True)
         events.stop_last_event()
 
@@ -169,7 +167,7 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
             obj: bpy.types.Object = context.object
         
             # Object
-            events.add_sub_event("Draw Object")
+            events.add_sub_event("Draw Object UI")
             # Global properties
             bfu_base_object.bfu_base_obj_ui.draw_general_ui_object(layout, context, obj)
             
@@ -197,7 +195,7 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
             bfu_assets_references.bfu_asset_ref_ui.draw_ui_object(layout, context, obj)
 
             # Animations
-            events.stop_last_and_start_new_event("Draw Animations")
+            events.stop_last_and_start_new_event("Draw Animations UI")
             bfu_anim_action.bfu_anim_action_ui.draw_ui_object(layout, context, obj)
             bfu_anim_action_adv.bfu_anim_action_adv_ui.draw_ui_object(layout, context, obj)
             bfu_anim_nla.bfu_anim_nla_ui.draw_ui_object(layout, context, obj)
@@ -206,7 +204,7 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
             events.stop_last_event()
 
         # Scene
-        events.add_sub_event("Draw Scene")
+        events.add_sub_event("Draw Scene UI")
         bfu_base_collection.bfu_base_col_ui.draw_ui_scene(layout, context)
         bfu_collection_as_staticmesh.bfu_static_col_ui.draw_ui_scene(layout, context)
         events.stop_last_event()

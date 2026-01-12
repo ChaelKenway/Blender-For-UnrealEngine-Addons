@@ -7,9 +7,7 @@
 #  https://github.com/xavier150/Blender-For-UnrealEngine-Addons
 # ----------------------------------------------
 
-import os
 import bpy
-import fnmatch
 from .. import bbpl
 from typing import TYPE_CHECKING, List
 
