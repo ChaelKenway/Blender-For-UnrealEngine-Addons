@@ -14,7 +14,7 @@ from .. import bfu_asset_preview
 from .. import bfu_addon_prefs
 
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context):
+def draw_ui_scene(layout: bpy.types.UILayout, context: bpy.types.Context):
     draw_export_ui(layout, context)
     draw_copy_import_script_ui(layout, context)
 

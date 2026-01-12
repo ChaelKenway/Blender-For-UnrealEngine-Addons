@@ -13,7 +13,7 @@ from .. import bbpl
 from .. import bfu_addon_prefs
 
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context):
+def draw_ui_scene(layout: bpy.types.UILayout, context: bpy.types.Context):
     scene = context.scene
     addon_prefs = bfu_addon_prefs.get_addon_preferences()
     

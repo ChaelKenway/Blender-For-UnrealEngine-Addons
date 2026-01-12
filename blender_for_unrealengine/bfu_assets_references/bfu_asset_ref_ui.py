@@ -20,7 +20,7 @@ from .. import bfu_assets_references
 from ..bfu_assets_references.bfu_asset_ref_props import BFU_EngineRefSkeletalMeshSearchModeEnum, BFU_EngineRefSkeletonSearchModeEnum
 
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
+def draw_ui_object(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
     
     scene = bpy.context.scene 
     if scene is None:

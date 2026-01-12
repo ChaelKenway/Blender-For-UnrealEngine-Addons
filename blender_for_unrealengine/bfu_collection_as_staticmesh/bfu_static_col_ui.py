@@ -19,7 +19,7 @@ from .. import bbpl
 from . import bfu_static_col_props
 
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context):
+def draw_ui_scene(layout: bpy.types.UILayout, context: bpy.types.Context):
 
     scene = bpy.context.scene
     if scene is None:

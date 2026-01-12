@@ -12,5 +12,5 @@ import bpy
 
 
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context):
+def draw_ui_scene(layout: bpy.types.UILayout, context: bpy.types.Context):
     pass

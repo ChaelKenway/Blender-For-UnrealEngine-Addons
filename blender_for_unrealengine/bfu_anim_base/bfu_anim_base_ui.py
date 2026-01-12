@@ -16,7 +16,7 @@ from .. import bfu_export_control
 from .. import bfu_asset_preview
 from ..bfu_assets_manager.bfu_asset_manager_type import AssetToSearch
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
+def draw_ui_object(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
     
     scene = bpy.context.scene 
 

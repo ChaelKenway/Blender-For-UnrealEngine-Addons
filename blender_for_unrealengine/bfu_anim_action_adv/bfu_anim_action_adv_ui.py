@@ -16,7 +16,7 @@ from .. import bfu_export_control
 from .. import bfu_anim_action
 from .. bfu_anim_action.bfu_anim_action_props import BFU_AnimActionExportEnum
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
+def draw_ui_object(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
 
     scene = bpy.context.scene 
     if scene is None:

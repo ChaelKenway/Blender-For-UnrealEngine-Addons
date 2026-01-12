@@ -22,7 +22,7 @@ from .. import bfu_custom_property
 from .. import bfu_export_control
 from .. import bfu_adv_object
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
+def draw_ui_object(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
 
     scene = bpy.context.scene 
 

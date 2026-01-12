@@ -171,7 +171,7 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
             # Object
             events.add_sub_event("Draw Object")
             # Global properties
-            bfu_base_object.bfu_base_obj_ui.draw_ui(layout, context, obj)
+            bfu_base_object.bfu_base_obj_ui.draw_general_ui_object(layout, context, obj)
             
             bfu_alembic_animation.bfu_alembic_animation_ui.draw_general_ui_object(layout, obj)
             bfu_groom.bfu_groom_ui.draw_general_ui_object(layout, obj)
@@ -179,7 +179,7 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
             bfu_spline.bfu_spline_ui.draw_general_ui_object(layout, obj)
 
             # Specific properties
-            bfu_adv_object.bfu_adv_obj_ui.draw_ui(layout, context, obj)
+            bfu_adv_object.bfu_adv_obj_ui.draw_ui_object(layout, context, obj)
             bfu_static_mesh.bfu_static_mesh_ui.draw_ui_object(layout, context, obj)
             bfu_skeletal_mesh.bfu_skeletal_mesh_ui.draw_ui_object(layout, context, obj)
             bfu_modular_skeletal_mesh.bfu_modular_skeletal_mesh_ui.draw_ui_object(layout, context, obj)
@@ -187,28 +187,28 @@ class BFU_PT_BlenderForUnrealObject(bpy.types.Panel):
             bfu_groom.bfu_groom_ui.draw_ui_object(layout, context, obj)
             bfu_camera.bfu_camera_ui.draw_ui_object_camera(layout, context, obj)
             bfu_spline.bfu_spline_ui.draw_ui_object_spline(layout, context, obj)
-            bfu_lod.bfu_lod_ui.draw_ui(layout, context, obj)
+            bfu_lod.bfu_lod_ui.draw_ui_object(layout, context, obj)
             bfu_collision.bfu_collision_ui.draw_ui_object(layout, context, obj)
             bfu_uv_map.bfu_uv_map_ui.draw_obj_ui(layout, context, obj)
             bfu_light_map.bfu_light_map_ui.draw_obj_ui(layout, context, obj)
             bfu_nanite.bfu_nanite_ui.draw_obj_ui(layout, context, obj)
             bfu_material.bfu_material_ui.draw_ui_object(layout, context, obj)
             bfu_vertex_color.bfu_vertex_color_ui.draw_ui_object(layout, context, obj)
-            bfu_assets_references.bfu_asset_ref_ui.draw_ui(layout, context, obj)
+            bfu_assets_references.bfu_asset_ref_ui.draw_ui_object(layout, context, obj)
 
             # Animations
             events.stop_last_and_start_new_event("Draw Animations")
-            bfu_anim_action.bfu_anim_action_ui.draw_ui(layout, context, obj)
-            bfu_anim_action_adv.bfu_anim_action_adv_ui.draw_ui(layout, context, obj)
-            bfu_anim_nla.bfu_anim_nla_ui.draw_ui(layout, context, obj)
-            bfu_anim_nla_adv.bfu_anim_nla_adv_ui.draw_ui(layout, context, obj)
-            bfu_anim_base.bfu_anim_base_ui.draw_ui(layout, context, obj)
+            bfu_anim_action.bfu_anim_action_ui.draw_ui_object(layout, context, obj)
+            bfu_anim_action_adv.bfu_anim_action_adv_ui.draw_ui_object(layout, context, obj)
+            bfu_anim_nla.bfu_anim_nla_ui.draw_ui_object(layout, context, obj)
+            bfu_anim_nla_adv.bfu_anim_nla_adv_ui.draw_ui_object(layout, context, obj)
+            bfu_anim_base.bfu_anim_base_ui.draw_ui_object(layout, context, obj)
             events.stop_last_event()
 
         # Scene
         events.add_sub_event("Draw Scene")
-        bfu_base_collection.bfu_base_col_ui.draw_ui(layout, context)
-        bfu_collection_as_staticmesh.bfu_static_col_ui.draw_ui(layout, context)
+        bfu_base_collection.bfu_base_col_ui.draw_ui_scene(layout, context)
+        bfu_collection_as_staticmesh.bfu_static_col_ui.draw_ui_scene(layout, context)
         events.stop_last_event()
 
         events.stop_last_event()

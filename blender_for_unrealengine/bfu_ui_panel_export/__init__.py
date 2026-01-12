@@ -80,11 +80,11 @@ class BFU_PT_Export(bpy.types.Panel):
 
         # Export sections
         events.stop_last_and_start_new_event("Draw Export Nomenclature")
-        bfu_export_nomenclature.bfu_export_nomenclature_ui.draw_ui(layout, context)
+        bfu_export_nomenclature.bfu_export_nomenclature_ui.draw_ui_scene(layout, context)
         events.stop_last_and_start_new_event("Draw Export Filter")
-        bfu_export_filter.bfu_export_filter_ui.draw_ui(layout, context)
+        bfu_export_filter.bfu_export_filter_ui.draw_ui_scene(layout, context)
         events.stop_last_and_start_new_event("Draw Export Process")
-        bfu_export_process.bfu_export_process_ui.draw_ui(layout, context)
+        bfu_export_process.bfu_export_process_ui.draw_ui_scene(layout, context)
         events.stop_last_event()
 
 

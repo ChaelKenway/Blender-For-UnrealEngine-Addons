@@ -16,7 +16,7 @@ from .. import bfu_export_control
 from .. import bfu_anim_nla
 
 
-def draw_ui(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
+def draw_ui_object(layout: bpy.types.UILayout, context: bpy.types.Context, obj: bpy.types.Object):
 
     scene = bpy.context.scene 
     if scene is None:
