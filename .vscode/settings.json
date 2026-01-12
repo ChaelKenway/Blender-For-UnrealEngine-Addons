@@ -1,7 +1,10 @@
 {
+    // When I'm using a virtual environment, it disable the type checking for some reason.
+    /*
     "python.defaultInterpreterPath": "${env:VIRTUAL_ENV}/bin/python",
     "python.analysis.extraPaths": [
         "${env:VIRTUAL_ENV}/lib/python3.13/site-packages",
         "${env:VIRTUAL_ENV}/Lib/site-packages"
-    ]
+    ],*/
+    "python.analysis.typeCheckingMode": "strict"
 }
