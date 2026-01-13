@@ -75,42 +75,42 @@ def register():
     for cls in classes:
         bpy.utils.register_class(cls)
     
-    bpy.types.Scene.bfu_camera_properties_expanded = bbpl.blender_layout.layout_accordion.add_ui_accordion(name="Camera Properties")  # type: ignore
-    bpy.types.Scene.bfu_camera_tools_expanded = bbpl.blender_layout.layout_accordion.add_ui_accordion(name="Camera")  # type: ignore
+    bpy.types.Scene.bfu_camera_properties_expanded = bbpl.blender_layout.layout_accordion.add_ui_accordion(name="Camera Properties")  # type: ignore[attr-defined]
+    bpy.types.Scene.bfu_camera_tools_expanded = bbpl.blender_layout.layout_accordion.add_ui_accordion(name="Camera")  # type: ignore[attr-defined]
 
-    bpy.types.Object.bfu_fix_axis_flippings = bpy.props.BoolProperty(  # type: ignore
+    bpy.types.Object.bfu_fix_axis_flippings = bpy.props.BoolProperty(  # type: ignore[attr-defined]
         name="Fix Camera Axis",
         description=('Enable this option to fix axis flipping caused by rotation wrapping. '
                     'Disable only if you use extreme camera animations in a single frame.'),
         override={'LIBRARY_OVERRIDABLE'},
         default=True,
         )
-    bpy.types.Object.bfu_fix_axis_flippings_warp_target = bpy.props.FloatVectorProperty(  # type: ignore
+    bpy.types.Object.bfu_fix_axis_flippings_warp_target = bpy.props.FloatVectorProperty(  # type: ignore[attr-defined]
         name="Fix Camera Axis Warp Target",
         description=('Target rotation values (in degrees) used to fix camera axis wrapping issues.'),
         override={'LIBRARY_OVERRIDABLE'},
         default=(math.radians(360.0), math.radians(360.0), math.radians(360.0)),  # Convert to radians
         subtype='EULER'
         )
-    bpy.types.Object.bfu_desired_camera_type = bpy.props.EnumProperty(  # type: ignore
+    bpy.types.Object.bfu_desired_camera_type = bpy.props.EnumProperty(  # type: ignore[attr-defined]
         name="Camera Type",
         description="Choose the type of camera",
         items=bfu_camera_utils.get_enum_cameras_list(),
         default=bfu_camera_utils.get_enum_cameras_default()
     )
-    bpy.types.Object.bfu_custom_camera_actor = bpy.props.StringProperty(  # type: ignore
+    bpy.types.Object.bfu_custom_camera_actor = bpy.props.StringProperty(  # type: ignore[attr-defined]
         name="Custom Camera Actor",
         description=('Ref adress for an custom camera actor'),
         override={'LIBRARY_OVERRIDABLE'},
         default="/Script/MyModule.MyCameraActor",
         )
-    bpy.types.Object.bfu_custom_camera_default_actor = bpy.props.StringProperty(  # type: ignore
+    bpy.types.Object.bfu_custom_camera_default_actor = bpy.props.StringProperty(  # type: ignore[attr-defined]
         name="Custom Camera Actor(default)",
         description=('Ref adress for an custom camera actor (default)'),
         override={'LIBRARY_OVERRIDABLE'},
         default="/Script/MyModule.Default__MyCameraActor",
         )
-    bpy.types.Object.bfu_custom_camera_component = bpy.props.StringProperty(  # type: ignore
+    bpy.types.Object.bfu_custom_camera_component = bpy.props.StringProperty(  # type: ignore[attr-defined]
         name="Custom Camera Component",
         description=('Ref adress for an custom camera component'),
         override={'LIBRARY_OVERRIDABLE'},
@@ -122,13 +122,13 @@ def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
 
-    del bpy.types.Object.bfu_custom_camera_component  # type: ignore
-    del bpy.types.Object.bfu_custom_camera_default_actor  # type: ignore
-    del bpy.types.Object.bfu_custom_camera_actor  # type: ignore
-    del bpy.types.Object.bfu_desired_camera_type  # type: ignore
-    del bpy.types.Object.bfu_fix_axis_flippings  # type: ignore
-    del bpy.types.Scene.bfu_camera_tools_expanded  # type: ignore
-    del bpy.types.Scene.bfu_camera_properties_expanded  # type: ignore
+    del bpy.types.Object.bfu_custom_camera_component  # type: ignore[attr-defined]
+    del bpy.types.Object.bfu_custom_camera_default_actor  # type: ignore[attr-defined]
+    del bpy.types.Object.bfu_custom_camera_actor  # type: ignore[attr-defined]
+    del bpy.types.Object.bfu_desired_camera_type  # type: ignore[attr-defined]
+    del bpy.types.Object.bfu_fix_axis_flippings  # type: ignore[attr-defined]
+    del bpy.types.Scene.bfu_camera_tools_expanded  # type: ignore[attr-defined]
+    del bpy.types.Scene.bfu_camera_properties_expanded  # type: ignore[attr-defined]
 
 
 
