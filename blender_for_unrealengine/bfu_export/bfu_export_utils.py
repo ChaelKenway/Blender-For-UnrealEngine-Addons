@@ -462,9 +462,9 @@ def set_object_export_name(obj: bpy.types.Object, is_skeletal: bool):
 def set_duplicated_object_export_name(duplicated_obj: bpy.types.Object, original_obj: bpy.types.Object, is_skeletal: bool):
     # Set is_skeleton = True only for skeletal assets.
     # Static meshes with armature should use is_skeleton = False
-    if bpy.context is None:
-        return
     scene = bpy.context.scene
+    if scene is None:
+        raise Exception("No active scene found.")
 
     # get the desired export name.
     if is_skeletal:
