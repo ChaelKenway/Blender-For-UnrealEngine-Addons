@@ -7,6 +7,7 @@
 #  https://github.com/xavier150/Blender-For-UnrealEngine-Addons
 # ----------------------------------------------
 
+import bpy
 from ... import bfu_check_props
 from ...bfu_check_types import bfu_checker
 from .... import bfu_utils
@@ -39,7 +40,10 @@ class BFU_Checker_ArmatureChildWithBoneParent(bfu_checker):
                     my_po_error.docs_octicon = 'armature-child-with-bone-parent'
 
     def run_correction(self, my_po_error: bfu_check_props.BFU_OT_UnrealPotentialError) -> bool:
+        # Use Armature Modifier instead of Parent Bone
         obj = my_po_error.object
+        if not isinstance(obj.data, bpy.types.Mesh):
+            return False
 
         # Get the armature
         armature = obj.parent
@@ -59,6 +63,9 @@ class BFU_Checker_ArmatureChildWithBoneParent(bfu_checker):
 
         # Create Armature Modifier
         armature_modifier = obj.modifiers.new(name="Armature", type='ARMATURE')
-        armature_modifier.object = armature
-        armature_modifier.vertex_group = bone_name
-        return True
+        if isinstance(armature_modifier, bfu_utils.bpy.types.ArmatureModifier):
+            armature_modifier.object = armature
+            armature_modifier.vertex_group = bone_name
+            return True
+        
+        return False
