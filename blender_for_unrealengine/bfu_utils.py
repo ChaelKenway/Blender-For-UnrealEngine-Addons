@@ -991,9 +991,11 @@ def get_anim_sample(obj: bpy.types.Object) -> float:
     return obj.bfu_sample_anim_for_export
 
 
-def get_armature_root_bones(armature: bpy.types.Object) -> List[bpy.types.EditBone]:
-    root_bones = []
-    if armature.type == "ARMATURE":
+def get_armature_root_bones(armature: bpy.types.Object) -> List[bpy.types.Bone]:
+    # DEPRECATED: Use bfu_skeletal_mesh.bfu_skeletal_mesh_utils.get_armature_root_bones()
+    
+    root_bones: List[bpy.types.Bone] = []
+    if isinstance(armature.data, bpy.types.Armature):
 
         if armature.bfu_export_deform_only:
             for bone in armature.data.bones:

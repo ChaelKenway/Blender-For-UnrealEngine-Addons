@@ -9,18 +9,15 @@
 
 import bpy
 import fnmatch
-from . import bfu_skeletal_mesh_config
-from .. import bbpl
+from typing import List
+from . import bfu_skeletal_mesh_props
 from .. import bfu_basics
 from .. import bfu_utils
-from .. import bfu_unreal_utils
 from .. import bfu_assets_manager
 from ..bfu_assets_manager.bfu_asset_manager_type import AssetType
 
-
-
-def get_socket_in_desired_childs(obj: bpy.types.Object):
-    socket_objs = []
+def get_socket_in_desired_childs(obj: bpy.types.Object) -> List[bpy.types.Object]:
+    socket_objs: List[bpy.types.Object] = []
     for obj in bfu_utils.get_export_desired_childs(obj):
         if fnmatch.fnmatchcase(obj.name, "SOCKET*"):
             socket_objs.append(obj)
@@ -43,3 +40,20 @@ def is_skeletal_mesh(obj: bpy.types.Object):
 
 def is_not_skeletal_mesh(obj: bpy.types.Object):
     return not is_skeletal_mesh(obj)
+
+def get_armature_root_bones(armature: bpy.types.Object) -> List[bpy.types.Bone]:
+    root_bones: List[bpy.types.Bone] = []
+    if isinstance(armature.data, bpy.types.Armature):
+
+        if bfu_skeletal_mesh_props.get_object_export_deform_only(armature):
+            for bone in armature.data.bones:
+                if bone.use_deform:
+                    rootBone = bfu_basics.get_root_bone_parent(bone)
+                    if rootBone not in root_bones:
+                        root_bones.append(rootBone)
+
+        else:
+            for bone in armature.data.bones:
+                if bone.parent is None:
+                    root_bones.append(bone)
+    return root_bones
