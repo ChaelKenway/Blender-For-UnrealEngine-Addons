@@ -33,9 +33,11 @@ def register():
         bpy.utils.register_class(cls)
 
     bfu_light_map_props.register()
+    bfu_light_map_operator.register()
 
 def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
 
+    bfu_light_map_operator.unregister()
     bfu_light_map_props.unregister()
