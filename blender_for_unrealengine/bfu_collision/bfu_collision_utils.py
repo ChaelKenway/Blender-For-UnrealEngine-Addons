@@ -75,8 +75,7 @@ def fix_collision_names(obj_list: List[bpy.types.Object]) -> int:
     for obj in obj_list:
         for member in CollisionShapeType:
             if obj.name.startswith(member.get_unreal_engine_prefix()):
-                update_length = update_collision_names(member, [obj])
-                fixed_collision_names += update_length
+                fixed_collision_names += update_collision_names(member, [obj])
                 
     return fixed_collision_names
 
@@ -96,8 +95,6 @@ def fix_collision_materials(obj_list: List[bpy.types.Object]) -> int:
             apply_collision_material_to_object(obj)
             fixed_collision_materials += 1
     return fixed_collision_materials
-
-
 
 def update_collision_names(collision_shape: CollisionShapeType, obj_list: List[bpy.types.Object]) -> int:
     # Update collision names for Unreal Engine.

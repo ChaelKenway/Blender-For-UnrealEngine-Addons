@@ -78,33 +78,18 @@ def generate_name_for_unreal_engine(desired_name: str, current_name: str = "") -
 
     clean_desired_name = desired_name
 
-    def is_valid_name(tested_name: str) -> bool:
-        tested_name_without_start = tested_name[len(clean_desired_name):]
-        parts = tested_name_without_start.split("_")
+    # Create a set of existing names once (O(n) instead of O(n*m))
+    existing_names = {obj.name for obj in scene.objects}
 
-        # Ensure the name has a suffix and the suffix is numeric
-        if len(parts) == 1 or not parts[-1].isnumeric():
-            return False
-        
-        # Special case for checking against the current name
-        if current_name and tested_name == current_name:
-            return True
-
-        # Ensure no existing object uses this name
-        for obj in scene.objects:
-            if tested_name == obj.name:
-                return False
-
-        return True
-
-    # Check if the desired name itself is valid and unique
-    if is_valid_name(clean_desired_name):
+    # Check if desired name is already available
+    if clean_desired_name not in existing_names or clean_desired_name == current_name:
         return clean_desired_name
 
-    # Attempt to append a numeric suffix to make the name unique
+    # Append numeric suffix until finding a unique name
     for num in range(10000):
         new_name = f"{clean_desired_name}_{num:02d}"  # Pads number with leading zeros
-        if is_valid_name(new_name):
+        
+        if new_name not in existing_names or new_name == current_name:
             return new_name
 
     raise ValueError("ERROR: No valid name found within the given constraints.")

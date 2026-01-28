@@ -7,7 +7,6 @@
 #  https://github.com/xavier150/Blender-For-UnrealEngine-Addons
 # ----------------------------------------------
 
-import bpy
 from typing import List
 from .. import bpl
 from .. import bfu_export_logs
