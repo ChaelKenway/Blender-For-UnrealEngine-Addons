@@ -8,8 +8,10 @@
 # ----------------------------------------------
 
 import bpy
-from typing import Dict, Any, TYPE_CHECKING
+from typing import Dict, Any
 from .. bfu_assets_manager.bfu_asset_manager_type import AssetType
+from . import bfu_nanite_props
+from .bfu_nanite_props import BFU_BuildNaniteMode
 
 def get_nanite_asset_data(obj: bpy.types.Object, asset_type: AssetType) -> Dict[str, Any]:
     asset_data: Dict[str, Any] = {}
@@ -19,15 +21,11 @@ def get_nanite_asset_additional_data(obj: bpy.types.Object, asset_type: AssetTyp
     asset_data: Dict[str, Any] = {}
     if obj:
 
-        if TYPE_CHECKING:
-            class FakeObject(bpy.types.Object):
-                bfu_build_nanite_mode: str = "build_nanite_auto"
-            obj = FakeObject()
-
         if asset_type in [AssetType.STATIC_MESH, AssetType.SKELETAL_MESH]:
-            if obj.bfu_build_nanite_mode == "build_nanite_true":
+            build_nanite_mode: BFU_BuildNaniteMode = bfu_nanite_props.get_object_build_nanite_mode(obj)
+            if build_nanite_mode.value == BFU_BuildNaniteMode.BUILD_NANITE_TRUE.value:
                 asset_data["build_nanite"] = True
-            elif obj.bfu_build_nanite_mode == "build_nanite_false":
+            elif build_nanite_mode.value == BFU_BuildNaniteMode.BUILD_NANITE_FALSE.value:
                 asset_data["build_nanite"] = False
-            # Keep empty for auto
+            # Keep empty for auto (The engine will decide to build or not nanite depending on the project settings)
     return asset_data
