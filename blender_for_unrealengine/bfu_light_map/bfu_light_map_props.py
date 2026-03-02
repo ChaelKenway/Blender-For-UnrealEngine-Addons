@@ -57,12 +57,7 @@ def get_tools_light_map_properties_expanded(scene: bpy.types.Scene) -> bool:
     return scene.bfu_tools_light_map_properties_expanded.is_expanded()  # type: ignore
 
 def get_object_static_mesh_light_map_mode(obj: bpy.types.Object) -> BFU_StaticMeshLightMapMode:
-    for item in BFU_StaticMeshLightMapMode:
-        if item.value == obj.bfu_static_mesh_light_map_mode:  # type: ignore
-            return item
-
-    print(f"Warning: Object {obj.name} has unknown light map mode '{obj.bfu_static_mesh_light_map_mode}'. Falling back to default light map mode...")  # type: ignore
-    return BFU_StaticMeshLightMapMode.default()
+    return BFU_StaticMeshLightMapMode(obj.bfu_static_mesh_light_map_mode)  # type: ignore
 
 def get_object_static_mesh_custom_light_map_res(obj: bpy.types.Object) -> int:
     return obj.bfu_static_mesh_custom_light_map_res  # type: ignore
