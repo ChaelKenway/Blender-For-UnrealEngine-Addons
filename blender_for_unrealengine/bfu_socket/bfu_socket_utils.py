@@ -10,7 +10,7 @@
 import bpy
 import math
 import mathutils
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Tuple
 from .bfu_socket_types import SocketType
 from . import bfu_socket_props
 from .. import bbpl
@@ -210,6 +210,12 @@ def update_socket_names(socket_type: SocketType, objList: List[bpy.types.Object]
                                     obj.name = new_name 
                                     update_length += 1
     return update_length
+
+def fix_scene_sockets() -> Tuple[int, int]:
+    objs: List[bpy.types.Object] = get_all_scene_socket_objs()
+    fixed_sockets_export = fix_socket_export_type(objs)
+    fixed_socket_names = fix_socket_names(objs)
+    return fixed_sockets_export, fixed_socket_names
 
 def convert_to_unrealengine_socket(
     socket_owner: bpy.types.Object, 

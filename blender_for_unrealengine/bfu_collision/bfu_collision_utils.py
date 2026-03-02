@@ -8,7 +8,7 @@
 # ----------------------------------------------
 
 import bpy
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from .bfu_collision_types import CollisionShapeType
 from . import bfu_collision_mesh_shape
 from . import bfu_collision_props
@@ -51,17 +51,17 @@ def get_all_scene_collision_objs() -> List[bpy.types.Object]:
 
 def fix_scene_collision_export_type() -> int:
     # Corrects bad properties
-    objs = get_all_scene_collision_objs()
+    objs: List[bpy.types.Object] = get_all_scene_collision_objs()
     return fix_collision_export_type(objs)
 
 def fix_collision_export_type(obj_list: List[bpy.types.Object]) -> int:
     # Corrects bad properties
-    fixed_collisions = 0
+    fixed_collisions_export = 0
     for obj in obj_list:
         if bfu_export_control.bfu_export_control_utils.is_export_recursive(obj):
             bfu_export_control.bfu_export_control_utils.set_auto(obj)
-            fixed_collisions += 1
-    return fixed_collisions
+            fixed_collisions_export += 1
+    return fixed_collisions_export
 
 def fix_scene_collision_names() -> int:
     # Updates hierarchy names
@@ -114,6 +114,13 @@ def update_collision_names(collision_shape: CollisionShapeType, obj_list: List[b
                         obj.name = new_name 
                         update_length += 1
     return update_length
+
+def fix_scene_collisions() -> Tuple[int, int, int]:
+    objs: List[bpy.types.Object] = get_all_scene_collision_objs()
+    fixed_collisions_export = fix_collision_export_type(objs)
+    fixed_collision_names = fix_collision_names(objs)
+    fixed_collision_materials = fix_collision_materials(objs)
+    return fixed_collisions_export, fixed_collision_names, fixed_collision_materials
 
 def create_unrealengine_collision_from_selection(collision_shape: CollisionShapeType, selected_the_new_objects: bool = True) -> List[bpy.types.Object]:
     # Create Unreal Engine Collisions Shapes from selected objects

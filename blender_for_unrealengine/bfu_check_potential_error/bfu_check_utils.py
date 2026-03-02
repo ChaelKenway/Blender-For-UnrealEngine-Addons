@@ -24,11 +24,11 @@ def get_potential_errors() -> List[bfu_check_props.BFU_OT_UnrealPotentialError]:
     scene = bpy.context.scene
     return scene.bfu_export_potential_errors
 
-def get_potential_issue_by_index(index) -> bfu_check_props.BFU_OT_UnrealPotentialError:
+def get_potential_issue_by_index(index: int) -> bfu_check_props.BFU_OT_UnrealPotentialError:
     scene = bpy.context.scene
     return scene.bfu_export_potential_errors[index]
 
-def remove_potential_by_index(index):
+def remove_potential_by_index(index: int):
     scene = bpy.context.scene
     scene.bfu_export_potential_errors.remove(index)
 
@@ -38,15 +38,12 @@ def clear_potential_errors():
 
 def process_general_fix()-> Dict[str, str]:
     time_log = bfu_export_logs.bfu_process_time_logs_utils.start_time_log("Clean before export")
-    fixed_collisions = bfu_collision.bfu_collision_utils.fix_scene_collision_export_type()
-    fixed_collision_names = bfu_collision.bfu_collision_utils.fix_scene_collision_names()
-    fixed_collision_materials = bfu_collision.bfu_collision_utils.fix_scene_collision_materials()
-    fixed_sockets = bfu_socket.bfu_socket_utils.fix_scene_socket_export_type()
-    fixed_socket_names = bfu_socket.bfu_socket_utils.fix_scene_socket_names()
+    fixed_collisions_export, fixed_collision_names, fixed_collision_materials = bfu_collision.bfu_collision_utils.fix_scene_collisions()
+    fixed_sockets_export, fixed_socket_names = bfu_socket.bfu_socket_utils.fix_scene_sockets()
 
     fix_info: Dict[str, str] = {
-        "Fixed Collision(s)": str(fixed_collisions + fixed_collision_names + fixed_collision_materials),
-        "Fixed Socket(s)": str(fixed_sockets + fixed_socket_names),
+        "Fixed Collision(s)": str(fixed_collisions_export + fixed_collision_names + fixed_collision_materials),
+        "Fixed Socket(s)": str(fixed_sockets_export + fixed_socket_names),
     }
 
     time_log.end_time_log()
