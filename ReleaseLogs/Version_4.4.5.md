@@ -10,4 +10,4 @@ Release Logs: https://github.com/xavier150/Blender-For-UnrealEngine-Addons/wiki/
 - Fixed: Light Map UVs operator was not registered properly, causing errors when trying to use it.
 - Fixed: bfu_build_nanite_mode property was using the wrong label.
     (It was labeled "Light Map" instead of "Build Nanite".)
-    
+- Fixed: Camera export produce script fail in Blender 5.0 due to changes in the Action API.
