@@ -12,6 +12,7 @@ source ~/venvs/blender_for_unrealengine/bin/activate
 ``` bash
 python -m pip install --upgrade pip
 python -m pip install fake-bpy-module-latest
+python -m pip install --upgrade fake-bpy-module-latest
 ```
 
 ### Set VSode Python interpreter
@@ -30,6 +31,7 @@ C:\venvs\blender_for_unrealengine\Scripts\Activate.ps1
 ``` bash
 python -m pip install --upgrade pip
 python -m pip install fake-bpy-module-latest
+python -m pip install --upgrade fake-bpy-module-latest
 ```
 
 ### Set VSode Python interpreter
