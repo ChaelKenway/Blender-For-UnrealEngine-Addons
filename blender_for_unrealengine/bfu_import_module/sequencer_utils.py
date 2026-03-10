@@ -208,7 +208,7 @@ if sequencer_scripting_active:
 
         if camera_tracks['camera_type'] == "ARCHVIS":
 
-            # MovieSceneDoubleVectorTrack not supported in Unreal Engine 5.0 and older
+            # MovieSceneDoubleVectorTrack only supported since Unreal Engine 5.0
             if import_module_unreal_utils.get_unreal_version() >= (5,0,0):
                 # Camera Shift X/Y
                 TrackArchVisShift = camera_component_binding.add_track(unreal.MovieSceneDoubleVectorTrack)
@@ -225,6 +225,25 @@ if sequencer_scripting_active:
             SectionArchVisCorrectPersp = TrackArchVisCorrectPersp.add_section()
             start_frame = unreal.FrameNumber(int(camera_tracks['frame_start']))
             get_section_all_channel(SectionArchVisCorrectPersp)[0].add_key(start_frame, False)
+
+        else:
+            # SensorHorizontalOffset and SensorVerticalOffset only supported since Unreal Engine 5.5
+            if import_module_unreal_utils.get_unreal_version() >= (5,5,0):
+                # Sensor Horizontal Offset
+                TrackSensorHorizontalOffset = camera_component_binding.add_track(unreal.MovieSceneFloatTrack)
+                TrackSensorHorizontalOffset.set_property_name_and_path('Sensor Horizontal Offset', 'Filmback.SensorHorizontalOffset')
+                sectionSensorHorizontalOffset = TrackSensorHorizontalOffset.add_section()
+                sectionSensorHorizontalOffset.set_end_frame_bounded(False)
+                sectionSensorHorizontalOffset.set_start_frame_bounded(False)
+                AddSequencerSectionFloatKeysByIniFile(sectionSensorHorizontalOffset, camera_tracks['ue_sensor_horizontal_offset'])
+
+                # Sensor Vertical Offset
+                TrackSensorVerticalOffset = camera_component_binding.add_track(unreal.MovieSceneFloatTrack)
+                TrackSensorVerticalOffset.set_property_name_and_path('Sensor Vertical Offset', 'Filmback.SensorVerticalOffset')
+                sectionSensorVerticalOffset = TrackSensorVerticalOffset.add_section()
+                sectionSensorVerticalOffset.set_end_frame_bounded(False)
+                sectionSensorVerticalOffset.set_start_frame_bounded(False)
+                AddSequencerSectionFloatKeysByIniFile(sectionSensorVerticalOffset, camera_tracks['ue_sensor_vertical_offset'])
 
                     
 

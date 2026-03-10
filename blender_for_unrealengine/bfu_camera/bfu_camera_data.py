@@ -107,6 +107,8 @@ class BFU_CameraTracks():
 
         # Formated data for Unreal Engine
         self.ue_transform_track: Dict[int, Any] = {}
+        self.ue_sensor_horizontal_offset: Dict[int, Any] = {}
+        self.ue_sensor_vertical_offset: Dict[int, Any] = {}
         self.ue_sensor_width: Dict[int, Any] = {}
         self.ue_sensor_height: Dict[int, Any] = {}
         self.ue_lens_min_fstop: float = 1.2  # Default value in Unreal Engine
@@ -141,6 +143,8 @@ class BFU_CameraTracks():
         data['camera_sensor_width'] = self.sensor_width
         data['camera_sensor_height'] = self.sensor_height
         data['camera_shift'] = self.projection_shift
+        data['ue_sensor_horizontal_offset'] = self.ue_sensor_horizontal_offset
+        data['ue_sensor_vertical_offset'] = self.ue_sensor_vertical_offset
         data['archvis_camera_shift'] = self.arch_projection_shift
         data['ue_camera_sensor_width'] = self.ue_sensor_width
         data['ue_camera_sensor_height'] = self.ue_sensor_height
@@ -271,9 +275,14 @@ class BFU_CameraTracks():
         shift_y = bfu_camera_utils.get_one_keys_by_fcurves(camera, "shift_y", camera.data.shift_y, frame)
         self.projection_shift[frame] = {"x": shift_x, "y": shift_y}
 
+        # Unreal shift with Arch Camera plugin
         arch_shift_x = shift_x * 2 # x2
         arch_shift_y = shift_y * 2 * (self.resolution_x / self.resolution_y) # Use screen ratio.
         self.arch_projection_shift[frame] = {"x": arch_shift_x, "y": arch_shift_y}
+
+        # Unreal shift native Unreal Engine 5.5 cameras sensor offset
+        self.ue_sensor_horizontal_offset[frame] = shift_x * self.ue_sensor_width[frame]
+        self.ue_sensor_vertical_offset[frame] = shift_y * self.ue_sensor_height[frame] * (self.resolution_x / self.resolution_y)
 
         #FOV
         self.field_of_view[frame] = round(math.degrees(self.angle[frame]), 8)
