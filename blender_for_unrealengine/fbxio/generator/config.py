@@ -62,6 +62,8 @@ class GeneratorConfig():
 # generated var needs to be ordered from new to older.
 generator_configs: List[GeneratorConfig] = []
 
+# For the moment I will continue to use Blender 5.0 FBXIO for next versions. 
+# I will remove the custom FBXIO in future and ask people to use the standard FBX or the glTF that furure proof.
 generator_configs.append(GeneratorConfig((5, 0, 0), r"Blender 5.0/5.0", export_fbx_files_with_threading, r"scripts/addons_core/io_scene_fbx/"))
 generator_configs.append(GeneratorConfig((4, 5, 0), r"Blender 4.5/4.5", export_fbx_files_with_threading, r"scripts/addons_core/io_scene_fbx/")) # Blender 4.5.5
 generator_configs.append(GeneratorConfig((4, 4, 0), r"Blender 4.4/4.4", export_fbx_files_with_threading, r"scripts/addons_core/io_scene_fbx/")) 

@@ -43,7 +43,7 @@ elif blender_version >= (2, 93, 0):
 elif blender_version >= (2, 83, 0):
     from . import io_scene_fbx_2_83 as current_fbxio 
 else:
-    from . import io_scene_fbx_2_83 as current_fbxio #Fall back
-
+    from . import io_scene_fbx_2_83 as current_fbxio 
+ #Fall back
 if "current_fbxio" in locals():
     importlib.reload(current_fbxio)
