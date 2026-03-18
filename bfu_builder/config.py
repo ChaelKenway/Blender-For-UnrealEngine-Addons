@@ -30,7 +30,8 @@ is_linux = platform.system() == "Linux"
 
 if is_linux:
     # Linux paths
-    add_blender_version((5, 0, 0), Path(linux_blender_install_path / "blender-5.0.0-linux-x64/blender"))
+    add_blender_version((5, 1, 0), Path(linux_blender_install_path / "blender-5.1.0-linux-x64/blender"))
+    add_blender_version((5, 0, 1), Path(linux_blender_install_path / "blender-5.0.1-linux-x64/blender"))
     add_blender_version((4, 5, 1), Path(linux_blender_install_path / "blender-4.5.1-linux-x64/blender"))
     add_blender_version((4, 4, 3), Path(linux_blender_install_path / "blender-4.4.3-linux-x64/blender"))
     add_blender_version((4, 3, 2), Path(linux_blender_install_path / "blender-4.3.2-linux-x64/blender"))
@@ -54,7 +55,8 @@ if is_linux:
     add_blender_version((2, 80, 0), Path(linux_blender_install_path / "blender-2.80rc3-linux-glibc217-x86_64/blender"))
 elif is_windows:
     # Windows paths
-    add_blender_version((5, 0, 0), Path(windows_blender_install_path / "Blender 5.0/blender.exe"))
+    add_blender_version((5, 1, 0), Path(windows_blender_install_path / "Blender 5.1/blender.exe"))
+    add_blender_version((5, 0, 1), Path(windows_blender_install_path / "Blender 5.0/blender.exe"))
     add_blender_version((4, 5, 0), Path(windows_blender_install_path / "Blender 4.5/blender.exe"))
     add_blender_version((4, 4, 0), Path(windows_blender_install_path / "Blender 4.4/blender.exe"))
     add_blender_version((4, 3, 0), Path(windows_blender_install_path / "Blender 4.3/blender.exe"))
