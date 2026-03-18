@@ -65,7 +65,7 @@ def export_camera_animation(
     saved_selection_names = bfu_export.bfu_export_utils.SavedObjectNames()
     saved_selection_names.save_new_name(obj)
     saved_frame_range: Tuple[int, int] = (scene.frame_start, scene.frame_end)
-    saved_camera_delta_scale = obj.delta_scale
+    saved_camera_delta_scale = obj.delta_scale.copy()
 
 
     # [SELECT ONLY] 

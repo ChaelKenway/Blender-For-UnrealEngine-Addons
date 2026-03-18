@@ -12,3 +12,4 @@ Release Logs: https://github.com/xavier150/Blender-For-UnrealEngine-Addons/wiki/
 - Fixed: bfu_build_nanite_mode property was using the wrong label.
     (It was labeled "Light Map" instead of "Build Nanite".)
 - Fixed: Camera export produce script fail in Blender 5.0 due to changes in the Action API.
+- Fixed: Camera delta_scale was not restored after export.
